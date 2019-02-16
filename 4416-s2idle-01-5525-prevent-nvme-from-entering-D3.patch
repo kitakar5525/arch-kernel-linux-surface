@@ -1,0 +1,52 @@
+This patch is from
+- [[v2,1/2] pci: prevent sk hynix nvme from entering D3 - Patchwork](https://patchwork.ozlabs.org/patch/993519/)
+, modified to match the TOSHIBA NVMe disk [1179:010f].
+
+The TOSHIBA NVMe disk found on Surface Book with Performance Base cannot wakeup from D3 state after s2idle.
+This patch disables D3 state on such NVMe disks.
+
+
+
+It leads to the power consumption raises to 2.2W during s2idle, while
+it consumes less than 1W during long idle if put SK hynix nvme to D3
+and then enter s2idle.
+From SK hynix FE, MS Windows doesn't put nvme to D3, and uses its own
+APST feature to do the power management.
+To leverage its APST feature during s2idle, we can't disable nvme
+device while suspending, too.
+
+BTW, prevent it from entering D3 will increase the power consumtion around
+0.13W ~ 0.15W during short/long idle, and the power consumption during
+s2idle becomes 0.77W.
+
+Signed-off-by: AceLan Kao <acelan.kao@canonical.com>
+
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 4700d24e5..2b67217e1 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -1332,6 +1332,10 @@ DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_AL, PCI_ANY_ID,
+    occur when mode detecting */
+ DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_VIA, PCI_ANY_ID,
+ 				PCI_CLASS_STORAGE_IDE, 8, quirk_no_ata_d3);
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SK_HYNIX, 0x1527, quirk_no_ata_d3);
++/* TOSHIBA NVMe disk found on Surface Book with Performance Base
++   cannot wakeup from D3 state after s2idle */
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_TOSHIBA, 0x010f, quirk_no_ata_d3);
+ 
+ /*
+  * This was originally an Alpha-specific thing, but it really fits here.
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 69f0abe1b..5f5adda07 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -3090,4 +3090,6 @@
+ 
+ #define PCI_VENDOR_ID_NCUBE		0x10ff
+ 
++#define PCI_VENDOR_ID_SK_HYNIX		0x1c5c
++
+ #endif /* _LINUX_PCI_IDS_H */
+-- 
+2.20.1
+

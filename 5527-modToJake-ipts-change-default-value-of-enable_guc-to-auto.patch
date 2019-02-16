@@ -1,0 +1,39 @@
+From 9595762a0dfaa4febfa9af60f87c9ddaf5c723be Mon Sep 17 00:00:00 2001
+From: "Hayataka@kitakar5525" <34676735+kitakar5525@users.noreply.github.com>
+Date: Sat, 16 Feb 2019 14:35:55 +0900
+Subject: [PATCH] ipts: change default value of enable_guc to "auto"
+
+---
+ drivers/gpu/drm/i915/i915_params.c | 2 +-
+ drivers/gpu/drm/i915/i915_params.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/i915/i915_params.c b/drivers/gpu/drm/i915/i915_params.c
+index 80cd47fd8..84415814c 100644
+--- a/drivers/gpu/drm/i915/i915_params.c
++++ b/drivers/gpu/drm/i915/i915_params.c
+@@ -145,7 +145,7 @@ i915_param_named_unsafe(edp_vswing, int, 0400,
+ i915_param_named_unsafe(enable_guc, int, 0400,
+ 	"Enable GuC load for GuC submission and/or HuC load. "
+ 	"Required functionality can be selected using bitmask values. "
+-	"(-1=auto, 0=disable, 1=GuC submission [default], 2=HuC load)");
++	"(-1=auto [default], 0=disable, 1=GuC submission, 2=HuC load)");
+ 
+ i915_param_named_unsafe(enable_ipts, int, 0400,
+ 	"Enable IPTS Touchscreen and Pen support (default: 1)");
+diff --git a/drivers/gpu/drm/i915/i915_params.h b/drivers/gpu/drm/i915/i915_params.h
+index b15f81d55..4ab800c3d 100644
+--- a/drivers/gpu/drm/i915/i915_params.h
++++ b/drivers/gpu/drm/i915/i915_params.h
+@@ -46,7 +46,7 @@ struct drm_printer;
+ 	param(int, disable_power_well, -1) \
+ 	param(int, enable_ips, 1) \
+ 	param(int, invert_brightness, 0) \
+-	param(int, enable_guc, 1) \
++	param(int, enable_guc, -1) \
+ 	param(int, guc_log_level, -1) \
+ 	param(char *, guc_firmware_path, NULL) \
+ 	param(char *, huc_firmware_path, NULL) \
+-- 
+2.20.1
+

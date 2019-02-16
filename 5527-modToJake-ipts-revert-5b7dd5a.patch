@@ -1,0 +1,26 @@
+Do not call `intel_ipts_suspend()` and `intel_ipts_resume()` in `intel_runtime_suspend()` and `intel_runtime_resume()`
+
+diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
+index f399201d7..bca433839 100644
+--- a/drivers/gpu/drm/i915/i915_drv.c
++++ b/drivers/gpu/drm/i915/i915_drv.c
+@@ -2922,9 +2922,6 @@ static int intel_runtime_suspend(struct device *kdev)
+ 
+ 	DRM_DEBUG_KMS("Suspending device\n");
+ 
+-	if (INTEL_GEN(dev_priv) >= 9 && i915_modparams.enable_guc && i915_modparams.enable_ipts)
+-		intel_ipts_suspend(dev);
+-
+ 	disable_rpm_wakeref_asserts(dev_priv);
+ 
+ 	/*
+@@ -3062,9 +3059,6 @@ static int intel_runtime_resume(struct device *kdev)
+ 
+ 	enable_rpm_wakeref_asserts(dev_priv);
+ 
+-	if (INTEL_GEN(dev_priv) >= 9 && i915_modparams.enable_guc && i915_modparams.enable_ipts)
+-        intel_ipts_resume(dev);
+-
+ 	if (ret)
+ 		DRM_ERROR("Runtime resume failed, disabling it (%d)\n", ret);
+ 	else

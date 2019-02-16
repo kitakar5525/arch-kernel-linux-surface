@@ -1,0 +1,78 @@
+This patch is from
+- [[v2,2/2] nvme: add quirk to not call disable function when suspending - Patchwork](https://patchwork.ozlabs.org/patch/993520/)
+, modified to match the TOSHIBA NVMe disk [1179:010f]
+
+Because we disable D3 state on the TOSHIBA NVMe disk, power consumption between s2idle is high.
+This patch resolves it by not calling `nvme_dev_disable()` on such disks and leave its own APST
+to do the power management.
+
+
+
+Call nvme_dev_disable() function leads to the power consumption goes
+up to 2.2 Watt during suspend-to-idle, and from SK hynix FE, they
+suggest us to use its own APST feature to do the power management during
+s2idle.
+After D3 is diabled and nvme_dev_disable() is not called while
+suspending, the power consumption drops to 0.77 Watt during s2idle.
+
+V2:
+	- replace PCI_DEVICE with PCI_VDEVICE
+	- replace 0x1c5c with SK_HYNIX
+
+Signed-off-by: AceLan Kao <acelan.kao@canonical.com>
+
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 081cbdcce..c7c48ab0e 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -90,6 +90,11 @@ enum nvme_quirks {
+ 	 * Set MEDIUM priority on SQ creation
+ 	 */
+ 	NVME_QUIRK_MEDIUM_PRIO_SQ		= (1 << 7),
++
++	/*
++	 * Do not disable nvme when suspending (s2idle)
++	 */
++	NVME_QUIRK_NO_DISABLE			= (1 << 8),
+ };
+ 
+ /*
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index c33bb201b..f70149024 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -31,6 +31,7 @@
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ #include <linux/sed-opal.h>
+ #include <linux/pci-p2pdma.h>
++#include <linux/suspend.h>
+ 
+ #include "nvme.h"
+ 
+@@ -2612,8 +2613,11 @@ static int nvme_suspend(struct device *dev)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev);
+ 	struct nvme_dev *ndev = pci_get_drvdata(pdev);
++	struct nvme_ctrl *ctrl = &ndev->ctrl;
++
++	if (!(pm_suspend_via_s2idle() && (ctrl->quirks & NVME_QUIRK_NO_DISABLE)))
++		nvme_dev_disable(ndev, true);
+ 
+-	nvme_dev_disable(ndev, true);
+ 	return 0;
+ }
+ 
+@@ -2716,6 +2720,10 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_LIGHTNVM, },
+ 	{ PCI_DEVICE(0x1d1d, 0x2601),	/* CNEX Granby */
+ 		.driver_data = NVME_QUIRK_LIGHTNVM, },
++	{ PCI_VDEVICE(SK_HYNIX, 0x1527),   /* Sk Hynix */
++		.driver_data = NVME_QUIRK_NO_DISABLE, },
++	{ PCI_VDEVICE(TOSHIBA, 0x010f),   /* TOSHIBA NVMe found on Surface Book with Performance Base */
++		.driver_data = NVME_QUIRK_NO_DISABLE, },
+ 	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
+-- 
+2.20.1
+
