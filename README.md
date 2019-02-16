@@ -9,6 +9,16 @@
 
 
 
+## How to build
+
+```bash
+git clone --depth 1 https://github.com/kitakar5525/arch-kernel-linux-surface
+cd arch-kernel-linux-surface
+makepkg -sC
+```
+
+
+
 ## patch filename prefix
 
 - 4416
