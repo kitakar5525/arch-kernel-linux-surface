@@ -6,7 +6,7 @@
 pkgbase=linux-surface       # Build kernel with a different name
 _srcver=4.20.10-arch1
 pkgver=${_srcver//-/.}
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -29,11 +29,11 @@ source=(
   #4416-00-jakeday-0009-surface3-power.patch.dontapply
   4416-00-jakeday-0010-surface-dock.patch
   4416-00-jakeday-0011-mwlwifi.patch
-  4416-00-jakeday-5525-0001-surface-acpi.patch
-  4416-00-jakeday-5525-0005-ipts.patch
-  4416-00-jakeday-5525-0006-hid.patch
+  4416-00-jakeday-5525-0001-surface-acpi-420.patch
+  4416-00-jakeday-5525-0005-ipts-420.patch
+  4416-00-jakeday-5525-0006-hid-420.patch
   4416-s0ix-01-5525-ipu_patches.patch
-  '4416-s0ix-02-ICL-support-and-other-enhancements-for-PMC-Core-added-SB1.patch'
+  '4416-s0ix-02-5525-ICL-support-and-other-enhancements-for-PMC-Core-added-SB1.patch'
   4416-s2idle-01-5525-prevent-nvme-from-entering-D3.patch
   #4416-s2idle-01-5525-prevent-wifi-and-nvme-from-entering-D3.patch.dontapply
   '4416-s2idle-02-5525-nvme-add-quirk-to-not-call-disable-function-when-suspending-for-powersaving.patch'
@@ -46,7 +46,6 @@ source=(
   #5526-debug-ipts-add-debugfs-debug_info.patch.dontapply
   '5526-debug-ipts-add-module-params-for-debugging.patch'
   5527-modToJake-ipts-change-default-value-of-enable_guc-to-auto.patch
-  5527-modToJake-ipts-revert-5b7dd5a.patch
   5529-gccWarn-ipts-remove-unused-variables.patch
   5529-gccWarn-ipts-uncomment-downstream_hpd_needs_d0.patch
   5529-gccWarn-mwlwifi-fix-gcc-warning.patch
@@ -61,7 +60,6 @@ sha256sums=('SKIP'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'SKIP' # linux.preset
-            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
