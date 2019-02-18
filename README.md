@@ -36,6 +36,9 @@ makepkg -sC
 
 ## Changelog
 
-2019-02-16
+2019-02-18 4.20.10-arch1-1-surface
+- [updating 4.19 patches · jakeday/linux-surface@2f1570d](https://github.com/jakeday/linux-surface/commit/2f1570d509eb7de8330ad4bc01b725c501ab9a8c)
+
+2019-02-16 4.20.10-arch1-1-surface
 - Arch Linux linux: [4.20.10.arch1-1](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=a0ed2c4c7b62fdad505cd9fa2fa18c922fce1662)
 -  jakeday patchset: [updating 4.19 patches · jakeday/linux-surface@5b7dd5a](https://github.com/jakeday/linux-surface/commit/5b7dd5a7a9967c34f04c7108f5c7fbe326e261e2)
