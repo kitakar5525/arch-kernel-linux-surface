@@ -36,7 +36,17 @@ makepkg -sC
 
 ## Changelog
 
-2019-02-18 4.20.10-arch1-2-surface
+2019-02-26 4.20.12-arch1-1-surface
+- [updating 4.19 patches and config · jakeday/linux-surface@5d21cc8](https://github.com/jakeday/linux-surface/commit/5d21cc824c9b41e65f92fdebcbcccd2181b9393f)
+- 4.20.12.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=570497767a7d448631451f1acd29813e1e48dbea)
+
+Merged into jakeday repository:
+- prevent-nvme-from-entering-D3.patch
+- nvme-add-quirk-to-not-call-disable-function-when-suspending-for-powersaving.patch
+- v3-platform-x86-surface3_power-MSHW0011-rev-eng-implementation.patch
+- mwifiex-disable-dump-and-reset.patch
+
+2019-02-18 4.20.10-arch1-1-surface
 - [updating 4.19 patches · jakeday/linux-surface@2f1570d](https://github.com/jakeday/linux-surface/commit/2f1570d509eb7de8330ad4bc01b725c501ab9a8c)
 
 2019-02-16 4.20.10-arch1-1-surface

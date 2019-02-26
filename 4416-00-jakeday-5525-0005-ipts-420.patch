@@ -1,6 +1,6 @@
-From 262bbb846cee92bcdaf0a4c3d15fe006bba1551b Mon Sep 17 00:00:00 2001
+From 6e50725647afb42d096308e95008235e7b6af9fb Mon Sep 17 00:00:00 2001
 From: "Hayataka@kitakar5525" <34676735+kitakar5525@users.noreply.github.com>
-Date: Sun, 17 Feb 2019 14:38:25 +0900
+Date: Tue, 26 Feb 2019 13:44:35 +0900
 Subject: [PATCH] ipts-420
 
 ---
@@ -6170,5 +6170,5 @@ index 000000000..f329bbfb8
 +
 +#endif // INTEL_IPTS_IF_H
 -- 
-2.20.1
+2.21.0
 
