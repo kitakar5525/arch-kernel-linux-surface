@@ -36,6 +36,9 @@ makepkg -sC
 
 ## Changelog
 
+2019-03-02 4.20.13-arch1-1-surface
+- 4.20.13.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=b44aa57a4ff15e6c41d24429aff240d2e3980645)
+
 2019-02-26 4.20.12-arch1-1-surface
 - [updating 4.19 patches and config · jakeday/linux-surface@5d21cc8](https://github.com/jakeday/linux-surface/commit/5d21cc824c9b41e65f92fdebcbcccd2181b9393f)
 - 4.20.12.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=570497767a7d448631451f1acd29813e1e48dbea)

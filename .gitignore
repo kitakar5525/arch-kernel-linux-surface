@@ -1,0 +1,4 @@
+*.sign
+*.pkg
+*.pkg.*
+nohup.out
