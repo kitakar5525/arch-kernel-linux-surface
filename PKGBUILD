@@ -6,7 +6,7 @@
 pkgbase=linux-surface       # Build kernel with a different name
 _srcver=5.0-arch1
 pkgver=${_srcver//-/.}
-pkgrel=2
+pkgrel=3
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -103,7 +103,7 @@ prepare() {
   msg2 "Setting config..."
   cp ../config .config
   #make olddefconfig
-  # 5525
+  # [5525]
   make oldconfig
   #make menuconfig
   cp .config ../config_new
