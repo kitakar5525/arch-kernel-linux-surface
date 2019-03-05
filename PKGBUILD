@@ -6,7 +6,7 @@
 pkgbase=linux-surface       # Build kernel with a different name
 _srcver=5.0-arch1
 pkgver=${_srcver//-/.}
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -40,6 +40,7 @@ source=(
   5526-debug-intel_pmc_core-debug-quirk_xtal_ignore.patch
   5526-debug-ipts-add-module-params-for-debugging.patch
   5527-modToJake-ipts-change-default-value-of-enable_guc-to-auto.patch
+  5527-modToJake-ipts-revert-suspend-resume-mechanism.patch
   5529-gccWarn-ipts-remove-unused-variables.patch
   5529-gccWarn-ipts-uncomment-downstream_hpd_needs_d0.patch
   5529-gccWarn-mwlwifi-fix-gcc-warning.patch
@@ -54,6 +55,7 @@ sha256sums=('SKIP'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'SKIP' # linux.preset
+            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'

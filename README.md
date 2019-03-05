@@ -56,6 +56,9 @@ makepkg -sC
 
 ## Changelog
 
+2019-03-05 5.0.0-arch1-2-surface
+- Add 5527-modToJake-ipts-revert-suspend-resume-mechanism.patch
+
 2019-03-05 5.0.0-arch1-1-surface
 - 5.0.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=88bced9118156f0e11267dbab1bfdb77cada9022)
 
