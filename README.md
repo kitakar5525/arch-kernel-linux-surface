@@ -1,6 +1,6 @@
 # linux-surface for Arch Linux latest stable kernel
 
-- Currently based on Arch Linux linux kernel 4.20.x
+- Currently based on Arch Linux linux kernel 5.0.y
 
 - Intended for **Surface Book 1 (especially, with Performance Base)** and **Surface 3**, but all patches (or equivalent) from [jakeday repository](https://github.com/jakeday/linux-surface) are applied
 
@@ -10,6 +10,26 @@
 See also:
 - [kitakar5525/note-linux-on-surface-book-1: Notes to use Linux on Surface Book 1 with Performance Base](https://github.com/kitakar5525/note-linux-on-surface-book-1)
 - [kitakar5525/note-linux-on-surface-3: Notes to use Linux on Surface 3](https://github.com/kitakar5525/note-linux-on-surface-3)
+
+
+
+## Issues on Linux 5.0
+
+### ipts is not working
+
+```
+kern  :info  : [Tue Mar  5 16:02:13 2019] [drm] HuC: Loaded firmware i915/skl_huc_ver01_07_1398.bin (version 1.7)
+kern  :info  : [Tue Mar  5 16:02:13 2019] [drm] GuC: Loaded firmware i915/skl_guc_ver9_33.bin (version 9.33)
+kern  :info  : [Tue Mar  5 16:02:13 2019] i915 0000:00:02.0: GuC firmware version 9.33
+kern  :info  : [Tue Mar  5 16:02:13 2019] i915 0000:00:02.0: GuC submission enabled
+kern  :info  : [Tue Mar  5 16:02:13 2019] i915 0000:00:02.0: HuC enabled
+kern  :info  : [Tue Mar  5 16:02:13 2019] ipts: initializing ipts
+kern  :err   : [Tue Mar  5 16:02:13 2019] [drm:intel_guc_send_mmio [i915]] *ERROR* MMIO: GuC action 0x10 failed with error -5 0xf000f000
+kern  :err   : [Tue Mar  5 16:02:13 2019] [drm:intel_ipts_init [i915]] *ERROR* i915_guc_ipts_submission_enable failed : -5
+
+kern  :err   : [Tue Mar  5 16:02:14 2019] ipts mei::3e8d0870-271a-4208-8eb5-9acb9402ae04:0F: open gpu error : -5
+kern  :err   : [Tue Mar  5 16:02:14 2019] ipts mei::3e8d0870-271a-4208-8eb5-9acb9402ae04:0F: error in handling resp msg
+```
 
 
 
@@ -35,6 +55,9 @@ makepkg -sC
 
 
 ## Changelog
+
+2019-03-05 5.0.0-arch1-1-surface
+- 5.0.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=88bced9118156f0e11267dbab1bfdb77cada9022)
 
 2019-03-02 4.20.13-arch1-1-surface
 - 4.20.13.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=b44aa57a4ff15e6c41d24429aff240d2e3980645)

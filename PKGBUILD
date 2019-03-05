@@ -4,7 +4,7 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=4.20.13-arch1
+_srcver=5.0-arch1
 pkgver=${_srcver//-/.}
 pkgrel=1
 arch=(x86_64)
@@ -29,10 +29,10 @@ source=(
   4416-00-jakeday-0010-surface-dock.patch
   4416-00-jakeday-0011-mwlwifi.patch
   4416-00-jakeday-5525-0001-surface_acpi-420.patch
-  4416-00-jakeday-5525-0002-suspend-420.patch
-  4416-00-jakeday-5525-0005-ipts-420.patch
+  4416-00-jakeday-5525-0002-suspend-500.patch
+  4416-00-jakeday-5525-0005-ipts-500.patch
   4416-00-jakeday-5525-0006-hid-420.patch
-  4416-s0ix-01-5525-ipu_patches.patch
+  4416-s0ix-01-ipu3-cio2-Allow-probe-to-succeed-if-there-are-no-sensors-connected-500.patch
   4416-s0ix-02-5525-ICL-support-and-other-enhancements-for-PMC-Core-added-SB1.patch
   5525-hid-add-Surface-3-JP-Type-Cover-and-Surface-Book-JP-.patch
   5525-mwifiex-change-parameters-permission.patch
