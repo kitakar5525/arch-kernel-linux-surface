@@ -65,8 +65,8 @@ jakeday patches
 - [updating 4.19 patches and config · jakeday/linux-surface@5d21cc8](https://github.com/jakeday/linux-surface/commit/5d21cc824c9b41e65f92fdebcbcccd2181b9393f)
 
 Improve s0ix
-- 4416-s0ix-01-ipu3-cio2-Allow-probe-to-succeed-if-there-are-no-sensors-connected-500.patch, [[1/1] ipu3-cio2: Allow probe to succeed if there are no sensors connected - Patchwork](https://patchwork.kernel.org/patch/10714257/)
-- 4416-s0ix-02-5525-ICL-support-and-other-enhancements-for-PMC-Core-added-SB1.patch, [[00/10] ICL support and other enhancements for PMC Core - Patchwork](https://lore.kernel.org/patchwork/cover/1037757/)
+- [[1/1] ipu3-cio2: Allow probe to succeed if there are no sensors connected - Patchwork](https://patchwork.kernel.org/patch/10714257/)
+- [[v3,0/5] ICL support and other enhancements for PMC Core - Patchwork](https://patchwork.kernel.org/cover/10812541/)
 
 Surface 3 sound fix for OEMB devices
 - 5525-sound-add-dmi-match-OEMB-for-affected-surface-3.patch

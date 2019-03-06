@@ -6,7 +6,7 @@
 pkgbase=linux-surface       # Build kernel with a different name
 _srcver=5.0-arch1
 pkgver=${_srcver//-/.}
-pkgrel=3
+pkgrel=4
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -32,8 +32,9 @@ source=(
   4416-00-jakeday-5525-0002-suspend-500.patch
   4416-00-jakeday-5525-0005-ipts-500.patch
   4416-00-jakeday-5525-0006-hid-420.patch
-  4416-s0ix-01-ipu3-cio2-Allow-probe-to-succeed-if-there-are-no-sensors-connected-500.patch
-  4416-s0ix-02-5525-ICL-support-and-other-enhancements-for-PMC-Core-added-SB1.patch
+  4416-s0ix-01-ipu3-cio2-Allow-probe-to-succeed-if-there-are-no-sensors-connected.patch
+  4416-s0ix-02-5525-v3-ICL-support-and-other-enhancements-for-PMC-Core-500.patch
+  4416-s0ix-03-5525-platform-x86-intel_pmc_core-Quirk-to-ignore-XTAL-shutdown-Add-SB1.patch
   5525-hid-add-Surface-3-JP-Type-Cover-and-Surface-Book-JP-.patch
   5525-mwifiex-change-parameters-permission.patch
   5525-sound-add-dmi-match-OEMB-for-affected-surface-3.patch
@@ -55,6 +56,7 @@ sha256sums=('SKIP'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'SKIP' # linux.preset
+            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
