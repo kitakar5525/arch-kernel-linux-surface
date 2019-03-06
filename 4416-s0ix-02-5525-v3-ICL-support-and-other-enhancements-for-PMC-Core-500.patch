@@ -1,24 +1,15 @@
-From
-- [[00/10] ICL support and other enhancements for PMC Core - Patchwork](https://lore.kernel.org/patchwork/cover/1037757/)
-Add `Surface Book` to `pmc_core_dmi_table` to apply `quirk_xtal_ignore`.
+From 8ecce27107940b8d4a0f4000dea94cd8de2910e1 Mon Sep 17 00:00:00 2001
+From: "Hayataka@kitakar5525" <34676735+kitakar5525@users.noreply.github.com>
+Date: Thu, 7 Mar 2019 03:41:07 +0900
+Subject: [PATCH] v3-ICL-support-and-other-enhancements-for-PMC-Core-500
 
+---
+ drivers/platform/x86/intel_pmc_core.c | 144 ++++++++++++++++++++++----
+ drivers/platform/x86/intel_pmc_core.h |  10 ++
+ 2 files changed, 133 insertions(+), 21 deletions(-)
 
-
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 0dd6b0f..12b65bd 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -52,6 +52,8 @@
- 
- #define INTEL_FAM6_CANNONLAKE_MOBILE	0x66
- 
-+#define INTEL_FAM6_ICELAKE_MOBILE       0x7E
-+
- /* "Small Core" Processors (Atom) */
- 
- #define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
 diff --git a/drivers/platform/x86/intel_pmc_core.c b/drivers/platform/x86/intel_pmc_core.c
-index 22dbf11..64fa7c8 100644
+index 22dbf1157..72cabfc23 100644
 --- a/drivers/platform/x86/intel_pmc_core.c
 +++ b/drivers/platform/x86/intel_pmc_core.c
 @@ -15,6 +15,7 @@
@@ -57,15 +48,7 @@ index 22dbf11..64fa7c8 100644
  static const struct pmc_bit_map spt_pll_map[] = {
  	{"MIPI PLL",			SPT_PMC_BIT_MPHY_CMN_LANE0},
  	{"GEN2 USB2PCIE2 PLL",		SPT_PMC_BIT_MPHY_CMN_LANE1},
-@@ -108,6 +119,7 @@ static const struct pmc_bit_map spt_ltr_show_map[] = {
- 	{"SATA",		SPT_PMC_LTR_SATA},
- 	{"GIGABIT_ETHERNET",	SPT_PMC_LTR_GBE},
- 	{"XHCI",		SPT_PMC_LTR_XHCI},
-+	{"Reserved",		SPT_PMC_LTR_RESERVED},
- 	{"ME",			SPT_PMC_LTR_ME},
- 	/* EVA is Enterprise Value Add, doesn't really exist on PCH */
- 	{"EVA",			SPT_PMC_LTR_EVA},
-@@ -131,6 +143,7 @@ static const struct pmc_reg_map spt_reg_map = {
+@@ -131,6 +142,7 @@ static const struct pmc_reg_map spt_reg_map = {
  	.mphy_sts = spt_mphy_map,
  	.pll_sts = spt_pll_map,
  	.ltr_show_sts = spt_ltr_show_map,
@@ -73,7 +56,7 @@ index 22dbf11..64fa7c8 100644
  	.slp_s0_offset = SPT_PMC_SLP_S0_RES_COUNTER_OFFSET,
  	.ltr_ignore_offset = SPT_PMC_LTR_IGNORE_OFFSET,
  	.regmap_length = SPT_PMC_MMIO_REG_LEN,
-@@ -139,6 +152,7 @@ static const struct pmc_reg_map spt_reg_map = {
+@@ -139,6 +151,7 @@ static const struct pmc_reg_map spt_reg_map = {
  	.pm_cfg_offset = SPT_PMC_PM_CFG_OFFSET,
  	.pm_read_disable_bit = SPT_PMC_READ_DISABLE_BIT,
  	.ltr_ignore_max = SPT_NUM_IP_IGN_ALLOWED,
@@ -81,7 +64,7 @@ index 22dbf11..64fa7c8 100644
  };
  
  /* Cannonlake: PGD PFET Enable Ack Status Register(s) bitmap */
-@@ -168,25 +182,26 @@ static const struct pmc_bit_map cnp_pfear_map[] = {
+@@ -168,25 +181,26 @@ static const struct pmc_bit_map cnp_pfear_map[] = {
  	{"SDX",                 BIT(4)},
  	{"SPE",                 BIT(5)},
  	{"Fuse",                BIT(6)},
@@ -121,16 +104,7 @@ index 22dbf11..64fa7c8 100644
  
  	{"SBR0",                BIT(0)},
  	{"SBR1",                BIT(1)},
-@@ -203,7 +218,7 @@ static const struct pmc_bit_map cnp_pfear_map[] = {
- 	{"CNVI",                BIT(3)},
- 	{"UFS0",                BIT(4)},
- 	{"EMMC",                BIT(5)},
--	{"Res_6",               BIT(6)},
-+	{"SPF",			BIT(6)},
- 	{"SBR6",                BIT(7)},
- 
- 	{"SBR7",                BIT(0)},
-@@ -211,6 +226,20 @@ static const struct pmc_bit_map cnp_pfear_map[] = {
+@@ -211,6 +225,20 @@ static const struct pmc_bit_map cnp_pfear_map[] = {
  	{"HDA_PGD4",            BIT(2)},
  	{"HDA_PGD5",            BIT(3)},
  	{"HDA_PGD6",            BIT(4)},
@@ -151,15 +125,7 @@ index 22dbf11..64fa7c8 100644
  	{}
  };
  
-@@ -276,6 +305,7 @@ static const struct pmc_bit_map cnp_ltr_show_map[] = {
- 	{"SATA",		CNP_PMC_LTR_SATA},
- 	{"GIGABIT_ETHERNET",	CNP_PMC_LTR_GBE},
- 	{"XHCI",		CNP_PMC_LTR_XHCI},
-+	{"Reserved",		CNP_PMC_LTR_RESERVED},
- 	{"ME",			CNP_PMC_LTR_ME},
- 	/* EVA is Enterprise Value Add, doesn't really exist on PCH */
- 	{"EVA",			CNP_PMC_LTR_EVA},
-@@ -291,6 +321,8 @@ static const struct pmc_bit_map cnp_ltr_show_map[] = {
+@@ -291,6 +319,8 @@ static const struct pmc_bit_map cnp_ltr_show_map[] = {
  	{"ISH",			CNP_PMC_LTR_ISH},
  	{"UFSX2",		CNP_PMC_LTR_UFSX2},
  	{"EMMC",		CNP_PMC_LTR_EMMC},
@@ -168,7 +134,7 @@ index 22dbf11..64fa7c8 100644
  	/* Below two cannot be used for LTR_IGNORE */
  	{"CURRENT_PLATFORM",	CNP_PMC_LTR_CUR_PLT},
  	{"AGGREGATED_SYSTEM",	CNP_PMC_LTR_CUR_ASLT},
-@@ -302,6 +334,7 @@ static const struct pmc_reg_map cnp_reg_map = {
+@@ -302,6 +332,7 @@ static const struct pmc_reg_map cnp_reg_map = {
  	.slp_s0_offset = CNP_PMC_SLP_S0_RES_COUNTER_OFFSET,
  	.slps0_dbg_maps = cnp_slps0_dbg_maps,
  	.ltr_show_sts = cnp_ltr_show_map,
@@ -176,7 +142,7 @@ index 22dbf11..64fa7c8 100644
  	.slps0_dbg_offset = CNP_PMC_SLPS0_DBG_OFFSET,
  	.ltr_ignore_offset = CNP_PMC_LTR_IGNORE_OFFSET,
  	.regmap_length = CNP_PMC_MMIO_REG_LEN,
-@@ -312,6 +345,22 @@ static const struct pmc_reg_map cnp_reg_map = {
+@@ -312,6 +343,22 @@ static const struct pmc_reg_map cnp_reg_map = {
  	.ltr_ignore_max = CNP_NUM_IP_IGN_ALLOWED,
  };
  
@@ -199,17 +165,7 @@ index 22dbf11..64fa7c8 100644
  static inline u8 pmc_core_reg_read_byte(struct pmc_dev *pmcdev, int offset)
  {
  	return readb(pmcdev->regbase + offset);
-@@ -380,7 +429,8 @@ static int pmc_core_ppfear_show(struct seq_file *s, void *unused)
- 	     index < PPFEAR_MAX_NUM_ENTRIES; index++, iter++)
- 		pf_regs[index] = pmc_core_reg_read_byte(pmcdev, iter);
- 
--	for (index = 0; map[index].name; index++)
-+	for (index = 0; map[index].name &&
-+	     index < pmcdev->map->ppfear_buckets * 8; index++)
- 		pmc_core_display_map(s, index, pf_regs[index / 8], map);
- 
- 	return 0;
-@@ -677,6 +727,25 @@ static int pmc_core_ltr_show(struct seq_file *s, void *unused)
+@@ -677,6 +724,25 @@ static int pmc_core_ltr_show(struct seq_file *s, void *unused)
  }
  DEFINE_SHOW_ATTRIBUTE(pmc_core_ltr);
  
@@ -235,19 +191,17 @@ index 22dbf11..64fa7c8 100644
  static void pmc_core_dbgfs_unregister(struct pmc_dev *pmcdev)
  {
  	debugfs_remove_recursive(pmcdev->dbgfs_dir);
-@@ -701,7 +770,10 @@ static int pmc_core_dbgfs_register(struct pmc_dev *pmcdev)
- 	debugfs_create_file("ltr_ignore", 0644, dir, pmcdev,
- 			    &pmc_core_ltr_ignore_ops);
+@@ -703,6 +769,9 @@ static int pmc_core_dbgfs_register(struct pmc_dev *pmcdev)
  
--	debugfs_create_file("ltr_show", 0644, dir, pmcdev, &pmc_core_ltr_fops);
-+	debugfs_create_file("ltr_show", 0444, dir, pmcdev, &pmc_core_ltr_fops);
-+
+ 	debugfs_create_file("ltr_show", 0644, dir, pmcdev, &pmc_core_ltr_fops);
+ 
 +	debugfs_create_file("package_cstate_show", 0444, dir, pmcdev,
 +			    &pmc_core_pkgc_fops);
- 
++
  	if (pmcdev->map->pll_sts)
  		debugfs_create_file("pll_status", 0444, dir, pmcdev,
-@@ -735,11 +807,12 @@ static inline void pmc_core_dbgfs_unregister(struct pmc_dev *pmcdev)
+ 				    &pmc_core_pll_fops);
+@@ -735,11 +804,12 @@ static inline void pmc_core_dbgfs_unregister(struct pmc_dev *pmcdev)
  #endif /* CONFIG_DEBUG_FS */
  
  static const struct x86_cpu_id intel_pmc_core_ids[] = {
@@ -265,7 +219,7 @@ index 22dbf11..64fa7c8 100644
  	{}
  };
  
-@@ -750,6 +823,45 @@ static const struct pci_device_id pmc_pci_ids[] = {
+@@ -750,6 +820,37 @@ static const struct pci_device_id pmc_pci_ids[] = {
  	{ 0, },
  };
  
@@ -297,30 +251,13 @@ index 22dbf11..64fa7c8 100644
 +		DMI_MATCH(DMI_PRODUCT_NAME, "HP Elite x2 1013 G3"),
 +		},
 +	},
-+	{
-+	.callback = quirk_xtal_ignore,
-+	.ident = "Surface Book",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Microsoft Corporation"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "Surface Book"),
-+		},
-+	},
 +	{}
 +};
 +
  static int __init pmc_core_probe(void)
  {
  	struct pmc_dev *pmcdev = &pmc;
-@@ -768,7 +880,7 @@ static int __init pmc_core_probe(void)
- 	 * Sunrisepoint PCH regmap can't be used. Use Cannonlake PCH regmap
- 	 * in this case.
- 	 */
--	if (!pci_dev_present(pmc_pci_ids))
-+	if (pmcdev->map == &spt_reg_map && !pci_dev_present(pmc_pci_ids))
- 		pmcdev->map = &cnp_reg_map;
- 
- 	if (lpit_read_residency_count_address(&slp_s0_addr))
-@@ -791,6 +903,7 @@ static int __init pmc_core_probe(void)
+@@ -791,6 +892,7 @@ static int __init pmc_core_probe(void)
  		return err;
  	}
  
@@ -329,7 +266,7 @@ index 22dbf11..64fa7c8 100644
  	return 0;
  }
 diff --git a/drivers/platform/x86/intel_pmc_core.h b/drivers/platform/x86/intel_pmc_core.h
-index 89554cb..88d9c06 100644
+index 89554cba5..40311df2c 100644
 --- a/drivers/platform/x86/intel_pmc_core.h
 +++ b/drivers/platform/x86/intel_pmc_core.h
 @@ -25,6 +25,7 @@
@@ -340,24 +277,7 @@ index 89554cb..88d9c06 100644
  #define SPT_PMC_MPHY_CORE_STS_0			0x1143
  #define SPT_PMC_MPHY_CORE_STS_1			0x1142
  #define SPT_PMC_MPHY_COM_STS_0			0x1155
-@@ -32,7 +33,7 @@
- #define SPT_PMC_SLP_S0_RES_COUNTER_STEP		0x64
- #define PMC_BASE_ADDR_MASK			~(SPT_PMC_MMIO_REG_LEN - 1)
- #define MTPMC_MASK				0xffff0000
--#define PPFEAR_MAX_NUM_ENTRIES			5
-+#define PPFEAR_MAX_NUM_ENTRIES			12
- #define SPT_PPFEAR_NUM_ENTRIES			5
- #define SPT_PMC_READ_DISABLE_BIT		0x16
- #define SPT_PMC_MSG_FULL_STS_BIT		0x18
-@@ -46,6 +47,7 @@
- #define SPT_PMC_LTR_SATA			0x368
- #define SPT_PMC_LTR_GBE				0x36C
- #define SPT_PMC_LTR_XHCI			0x370
-+#define SPT_PMC_LTR_RESERVED			0x374
- #define SPT_PMC_LTR_ME				0x378
- #define SPT_PMC_LTR_EVA				0x37C
- #define SPT_PMC_LTR_SPC				0x380
-@@ -135,6 +137,9 @@ enum ppfear_regs {
+@@ -135,6 +136,9 @@ enum ppfear_regs {
  #define SPT_PMC_BIT_MPHY_CMN_LANE2		BIT(2)
  #define SPT_PMC_BIT_MPHY_CMN_LANE3		BIT(3)
  
@@ -367,15 +287,7 @@ index 89554cb..88d9c06 100644
  /* Cannonlake Power Management Controller register offsets */
  #define CNP_PMC_SLPS0_DBG_OFFSET		0x10B4
  #define CNP_PMC_PM_CFG_OFFSET			0x1818
-@@ -156,6 +161,7 @@ enum ppfear_regs {
- #define CNP_PMC_LTR_SATA			0x1B68
- #define CNP_PMC_LTR_GBE				0x1B6C
- #define CNP_PMC_LTR_XHCI			0x1B70
-+#define CNP_PMC_LTR_RESERVED			0x1B74
- #define CNP_PMC_LTR_ME				0x1B78
- #define CNP_PMC_LTR_EVA				0x1B7C
- #define CNP_PMC_LTR_SPC				0x1B80
-@@ -176,6 +182,10 @@ enum ppfear_regs {
+@@ -176,6 +180,10 @@ enum ppfear_regs {
  #define LTR_REQ_SNOOP				BIT(15)
  #define LTR_REQ_NONSNOOP			BIT(31)
  
@@ -386,7 +298,7 @@ index 89554cb..88d9c06 100644
  struct pmc_bit_map {
  	const char *name;
  	u32 bit_mask;
-@@ -208,6 +218,7 @@ struct pmc_reg_map {
+@@ -208,6 +216,7 @@ struct pmc_reg_map {
  	const struct pmc_bit_map *pll_sts;
  	const struct pmc_bit_map **slps0_dbg_maps;
  	const struct pmc_bit_map *ltr_show_sts;
@@ -394,7 +306,7 @@ index 89554cb..88d9c06 100644
  	const u32 slp_s0_offset;
  	const u32 ltr_ignore_offset;
  	const int regmap_length;
-@@ -217,6 +228,7 @@ struct pmc_reg_map {
+@@ -217,6 +226,7 @@ struct pmc_reg_map {
  	const int pm_read_disable_bit;
  	const u32 slps0_dbg_offset;
  	const u32 ltr_ignore_max;
@@ -402,3 +314,6 @@ index 89554cb..88d9c06 100644
  };
  
  /**
+-- 
+2.21.0
+
