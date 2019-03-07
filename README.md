@@ -19,7 +19,7 @@ See also:
 
 ### ipts is not working
 
-`dmesg` log when booting with drm.debug=0x02:
+`dmesg` log when booting with `drm.debug=0x02`:
 ```
 kern  :info  : [Thu Mar  7 18:50:57 2019] i915 0000:00:02.0: GuC firmware version 9.33
 kern  :info  : [Thu Mar  7 18:50:57 2019] i915 0000:00:02.0: GuC submission enabled
