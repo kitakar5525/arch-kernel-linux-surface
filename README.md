@@ -19,18 +19,24 @@ See also:
 
 ### ipts is not working
 
+`dmesg` log when booting with drm.debug=0x02:
 ```
-kern  :info  : [Tue Mar  5 16:02:13 2019] [drm] HuC: Loaded firmware i915/skl_huc_ver01_07_1398.bin (version 1.7)
-kern  :info  : [Tue Mar  5 16:02:13 2019] [drm] GuC: Loaded firmware i915/skl_guc_ver9_33.bin (version 9.33)
-kern  :info  : [Tue Mar  5 16:02:13 2019] i915 0000:00:02.0: GuC firmware version 9.33
-kern  :info  : [Tue Mar  5 16:02:13 2019] i915 0000:00:02.0: GuC submission enabled
-kern  :info  : [Tue Mar  5 16:02:13 2019] i915 0000:00:02.0: HuC enabled
-kern  :info  : [Tue Mar  5 16:02:13 2019] ipts: initializing ipts
-kern  :err   : [Tue Mar  5 16:02:13 2019] [drm:intel_guc_send_mmio [i915]] *ERROR* MMIO: GuC action 0x10 failed with error -5 0xf000f000
-kern  :err   : [Tue Mar  5 16:02:13 2019] [drm:intel_ipts_init [i915]] *ERROR* i915_guc_ipts_submission_enable failed : -5
-
-kern  :err   : [Tue Mar  5 16:02:14 2019] ipts mei::3e8d0870-271a-4208-8eb5-9acb9402ae04:0F: open gpu error : -5
-kern  :err   : [Tue Mar  5 16:02:14 2019] ipts mei::3e8d0870-271a-4208-8eb5-9acb9402ae04:0F: error in handling resp msg
+kern  :info  : [Thu Mar  7 18:50:57 2019] i915 0000:00:02.0: GuC firmware version 9.33
+kern  :info  : [Thu Mar  7 18:50:57 2019] i915 0000:00:02.0: GuC submission enabled
+kern  :info  : [Thu Mar  7 18:50:57 2019] i915 0000:00:02.0: HuC enabled
+kern  :debug : [Thu Mar  7 18:50:57 2019] [drm:gen8_init_common_ring [i915]] Applied 5 rcs0 workarounds
+kern  :debug : [Thu Mar  7 18:50:57 2019] [drm:gen9_init_render_ring [i915]] Applied 4 whitelist workarounds
+kern  :info  : [Thu Mar  7 18:50:57 2019] ipts: initializing ipts
+kern  :debug : [Thu Mar  7 18:50:57 2019] [drm:guc_client_alloc [i915]] client 2 (high prio=yes) reserved doorbell: 2
+kern  :debug : [Thu Mar  7 18:50:57 2019] [drm:guc_client_alloc [i915]] reserved cacheline 0x80, next 0xc0, linesize 64
+kern  :debug : [Thu Mar  7 18:50:57 2019] [drm:guc_client_alloc [i915]] new priority 1 client 00000000df811bf9 for engine(s) 0x47: stage_id 2
+kern  :debug : [Thu Mar  7 18:50:57 2019] [drm:guc_client_alloc [i915]] doorbell id 2, cacheline offset 0x80
+kern  :err   : [Thu Mar  7 18:50:57 2019] [drm:intel_guc_send_mmio [i915]] *ERROR* MMIO: GuC action 0x10 failed with error -5 0xf000f000
+kern  :debug : [Thu Mar  7 18:50:57 2019] [drm:create_doorbell [i915]] Couldn't create client 2 doorbell: -5
+kern  :err   : [Thu Mar  7 18:50:57 2019] [drm:intel_ipts_init [i915]] *ERROR* i915_guc_ipts_submission_enable failed : -5
+[...]
+kern  :err   : [Thu Mar  7 18:50:58 2019] ipts mei::3e8d0870-271a-4208-8eb5-9acb9402ae04:0F: open gpu error : -5
+kern  :err   : [Thu Mar  7 18:50:58 2019] ipts mei::3e8d0870-271a-4208-8eb5-9acb9402ae04:0F: error in handling resp msg
 ```
 
 
