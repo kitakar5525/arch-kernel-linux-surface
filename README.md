@@ -7,7 +7,7 @@
 - PKGBUILD is from [core/linux](https://git.archlinux.org/svntogit/packages.git/?h=packages/linux)
 	- `linux.preset` is modified not to create fallback initramfs. If you need it, rename `linux.preset.orig` to `linux.preset`
 
-- Patch files will be retrieved from my patches repository: [linux-surface-patches](https://github.com/kitakar5525/linux-surface-patches)
+- Patch files will be retrieved from my patches repository: [kitakar5525/linux-surface-patches](https://github.com/kitakar5525/linux-surface-patches)
 
 - I may change some kernel configs. See [config.diff](config.diff)
 
