@@ -1,6 +1,6 @@
-From ed7dbc464714a4999f109da34650c922e664151f Mon Sep 17 00:00:00 2001
+From 8ed7e1cb3f6b6eb482f214f3501eb834251ef51e Mon Sep 17 00:00:00 2001
 From: "Hayataka@kitakar5525" <34676735+kitakar5525@users.noreply.github.com>
-Date: Tue, 26 Feb 2019 13:52:59 +0900
+Date: Sat, 9 Mar 2019 18:39:57 +0900
 Subject: [PATCH] suspend-500
 
 ---
@@ -120,10 +120,10 @@ index 0bd595a0b..a8385e889 100644
  	pm_notifier_call_chain(PM_POST_SUSPEND);
  	pm_restore_console();
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index ba4d9e85f..540387f3d 100644
+index e88b93a85..c8f15ceb7 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -312,7 +312,16 @@ static int min_extfrag_threshold;
+@@ -315,7 +315,16 @@ static int min_extfrag_threshold;
  static int max_extfrag_threshold = 1000;
  #endif
  

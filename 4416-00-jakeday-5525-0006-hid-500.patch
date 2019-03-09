@@ -1,7 +1,7 @@
-From 6697dd389564d8da5f3d5beb4549a5f80af726f6 Mon Sep 17 00:00:00 2001
+From 3d0a07280560799a09c2f213c370b8b37f0b1065 Mon Sep 17 00:00:00 2001
 From: "Hayataka@kitakar5525" <34676735+kitakar5525@users.noreply.github.com>
-Date: Tue, 26 Feb 2019 13:45:58 +0900
-Subject: [PATCH] hid-420
+Date: Sat, 9 Mar 2019 18:41:00 +0900
+Subject: [PATCH] hid-500
 
 ---
  drivers/hid/hid-ids.h        | 21 +++++++++----
@@ -11,10 +11,10 @@ Subject: [PATCH] hid-420
  4 files changed, 86 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 27519eb8e..62ec7723d 100644
+index 24f846d67..b10672a0e 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
-@@ -806,11 +806,22 @@
+@@ -811,11 +811,22 @@
  #define USB_DEVICE_ID_MS_DIGITAL_MEDIA_3KV1 0x0732
  #define USB_DEVICE_ID_MS_DIGITAL_MEDIA_600  0x0750
  #define USB_DEVICE_ID_MS_COMFORT_MOUSE_4500	0x076c
