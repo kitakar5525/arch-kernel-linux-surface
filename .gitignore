@@ -2,3 +2,5 @@
 *.pkg
 *.pkg.*
 nohup.out
+*.tar.gz
+*.tar.xz
