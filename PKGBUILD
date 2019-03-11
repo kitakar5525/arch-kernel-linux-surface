@@ -4,11 +4,12 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.0-arch1
+_srcver=5.0.1-arch1
+pkgrel=1
 _patch_release_tag=1.0
+
 _patch_linux_ver=500
 pkgver=${_srcver//-/.}
-pkgrel=6
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
