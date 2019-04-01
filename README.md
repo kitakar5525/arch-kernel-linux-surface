@@ -30,7 +30,7 @@ makepkg -sC
 ## Status
 
 Arch Linux linux version
-- 5.0.4.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=3fd0b7161b3f2961a7109810155ebe61f040126d)
+- 5.0.5.arch1-1: [svntogit/packages.git - Git clone of the 'packages' repository](https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=e0e8cd0b6566832daf08b0e020500591fcf60be3)
 
 kitakar5525/linux-surface-patches version
 - [Release v1.2.1 · kitakar5525/linux-surface-patches](https://github.com/kitakar5525/linux-surface-patches/releases/tag/v1.2.1)
