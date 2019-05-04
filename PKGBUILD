@@ -1,25 +1,23 @@
 # Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Maintainer: Tobias Powalowski <tpowa@archlinux.org>
-# Maintainer: Thomas Baechler <thomas@archlinux.org>
+# Contributor: Thomas Baechler <thomas@archlinux.org>
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.0.5-arch1
+_srcver=5.0.11-arch1
 pkgrel=1
-_patch_release_tag=1.2.1
+_patch_release_tag=1.4.3 # release tag of kitakar5525/linux-surface-patches
 
-_patch_linux_ver=5.0
+_patch_linux_ver=5.0 # patch directory name of kitakar5525/linux-surface-patches
 pkgver=${_srcver//-/.}
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
-makedepends=(xmlto kmod inetutils bc libelf git python-sphinx graphviz)
+makedepends=(xmlto kmod inetutils bc libelf git)
 options=('!strip')
-#_srcname=archlinux-linux
 _srcname=linux-$_srcver
 source=(
-  #"$_srcname::git+https://git.archlinux.org/linux.git?signed#tag=v$_srcver"
-  "https://git.archlinux.org/linux.git/snapshot/linux-$_srcver.tar.gz"
+  "https://git.archlinux.org/linux.git/snapshot/linux-$_srcver.tar.gz" # use tarball instead
   config         # the main kernel config file
   60-linux.hook  # pacman hook for depmod
   90-linux.hook  # pacman hook for initramfs regeneration
@@ -86,7 +84,7 @@ prepare() {
 
 build() {
   cd $_srcname
-  make -s bzImage modules htmldocs
+  make bzImage modules
 }
 
 _package() {
@@ -105,7 +103,7 @@ _package() {
   msg2 "Installing boot image..."
   # systemd expects to find the kernel here to allow hibernation
   # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
-  install -Dm644 "$(make image_name)" "$modulesdir/vmlinuz"
+  install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
   install -Dm644 "$modulesdir/vmlinuz" "$pkgdir/boot/vmlinuz-$pkgbase"
 
   msg2 "Installing modules..."
@@ -236,18 +234,6 @@ _package-docs() {
   msg2 "Installing documentation..."
   mkdir -p "$builddir"
   cp -t "$builddir" -a Documentation
-
-  msg2 "Removing doctrees..."
-  rm -r "$builddir/Documentation/output/.doctrees"
-
-  msg2 "Moving HTML docs..."
-  local src dst
-  while read -rd '' src; do
-    dst="$builddir/Documentation/${src#$builddir/Documentation/output/}"
-    mkdir -p "${dst%/*}"
-    mv "$src" "$dst"
-    rmdir -p --ignore-fail-on-non-empty "${src%/*}"
-  done < <(find "$builddir/Documentation/output" -type f -print0)
 
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/share/doc"
