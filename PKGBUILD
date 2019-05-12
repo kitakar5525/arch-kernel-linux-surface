@@ -4,11 +4,11 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.0.11-arch1
+_srcver=5.1.1-arch1
 pkgrel=1
-_patch_release_tag=1.4.3 # release tag of kitakar5525/linux-surface-patches
+_patch_release_tag=1.5.1 # release tag of kitakar5525/linux-surface-patches
 
-_patch_linux_ver=5.0 # patch directory name of kitakar5525/linux-surface-patches
+_patch_linux_ver=5.1 # patch directory name of kitakar5525/linux-surface-patches
 pkgver=${_srcver//-/.}
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
@@ -30,12 +30,12 @@ validpgpkeys=(
   '8218F88849AAC522E94CF470A5E9288C4FA415FA'  # Jan Alexander Steffens (heftig)
 )
 sha256sums=('SKIP'
-            'SKIP'
+            'SKIP' # config
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'SKIP' # linux.preset
             'SKIP' # kitakar5525/linux-surface-patches
-)
+            )
 
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-ARCH}
