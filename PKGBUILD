@@ -4,16 +4,19 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.1.16-arch1
-pkgrel=2
-_patch_release_tag=2.2.1 # release tag of kitakar5525/linux-surface-patches
+_srcver=5.2-arch2
+pkgrel=1
+_patch_release_tag=2.3.1 # release tag of kitakar5525/linux-surface-patches
 
-_patch_linux_ver=5.1 # patch directory name of kitakar5525/linux-surface-patches
+_patch_linux_ver=5.2rc # patch directory name of kitakar5525/linux-surface-patches
 pkgver=${_srcver//-/.}
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
-makedepends=(xmlto kmod inetutils bc libelf git)
+makedepends=(
+  xmlto kmod inetutils bc libelf git python-sphinx python-sphinx_rtd_theme
+  graphviz imagemagick
+)
 options=('!strip')
 _srcname=linux-$_srcver
 source=(
@@ -74,7 +77,7 @@ prepare() {
   #make olddefconfig
   make oldconfig
   # [5525] do `menuconfig` here if you want
-  # make menuconfig
+  make menuconfig
   # [5525] copy newly generated kernel config to $src
   cp .config ../config_new
 
@@ -84,7 +87,7 @@ prepare() {
 
 build() {
   cd $_srcname
-  make bzImage modules
+  make bzImage modules htmldocs
 }
 
 _package() {
@@ -234,6 +237,18 @@ _package-docs() {
   msg2 "Installing documentation..."
   mkdir -p "$builddir"
   cp -t "$builddir" -a Documentation
+
+  msg2 "Removing doctrees..."
+  rm -r "$builddir/Documentation/output/.doctrees"
+
+  msg2 "Moving HTML docs..."
+  local src dst
+  while read -rd '' src; do
+    dst="$builddir/Documentation/${src#$builddir/Documentation/output/}"
+    mkdir -p "${dst%/*}"
+    mv "$src" "$dst"
+    rmdir -p --ignore-fail-on-non-empty "${src%/*}"
+  done < <(find "$builddir/Documentation/output" -type f -print0)
 
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/share/doc"
