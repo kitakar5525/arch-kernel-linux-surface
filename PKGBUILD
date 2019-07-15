@@ -4,9 +4,9 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.2-arch2
+_srcver=5.2.1-arch1
 pkgrel=1
-_patch_release_tag=2.5 # release tag of kitakar5525/linux-surface-patches
+_patch_release_tag=2.6 # release tag of kitakar5525/linux-surface-patches
 
 _patch_linux_ver=5.2 # patch directory name of kitakar5525/linux-surface-patches
 pkgver=${_srcver//-/.}
@@ -77,7 +77,7 @@ prepare() {
   #make olddefconfig
   make oldconfig
   # [5525] do `menuconfig` here if you want
-  # make menuconfig
+  make menuconfig
   # [5525] copy newly generated kernel config to $src
   cp .config ../config_new
 
