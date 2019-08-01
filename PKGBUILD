@@ -6,7 +6,7 @@
 pkgbase=linux-surface       # Build kernel with a different name
 _srcver=5.2.4-arch1
 pkgrel=1
-_patch_release_tag=2.7 # release tag of kitakar5525/linux-surface-patches
+_patch_release_tag=2.8.1 # release tag of kitakar5525/linux-surface-patches
 
 _patch_linux_ver=5.2 # patch directory name of kitakar5525/linux-surface-patches
 pkgver=${_srcver//-/.}
