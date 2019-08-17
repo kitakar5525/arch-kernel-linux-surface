@@ -4,9 +4,9 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.2.8-arch1
+_srcver=5.2.9-arch1
 pkgrel=1
-_patch_release_tag=2.9.3 # release tag of kitakar5525/linux-surface-patches
+_patch_release_tag=2.9.4 # release tag of kitakar5525/linux-surface-patches
 
 _patch_linux_ver=5.2 # patch directory name of kitakar5525/linux-surface-patches
 pkgver=${_srcver//-/.}
