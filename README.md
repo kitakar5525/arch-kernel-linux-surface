@@ -1,6 +1,6 @@
 # linux-surface for Arch Linux latest stable kernel
 
-- Currently based on Arch Linux linux kernel 5.2.y
+- Currently based on Arch Linux linux kernel 5.3.y
 
 - Intended for **Surface Book 1 (especially, with Performance Base)** and **Surface 3**, but all patches (or equivalent) from [jakeday repository](https://github.com/jakeday/linux-surface) are applied
 
