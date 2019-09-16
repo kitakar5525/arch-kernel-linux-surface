@@ -4,11 +4,11 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.2.11-arch1
+_srcver=5.3-arch1
 pkgrel=1
-_patch_release_tag=3.1 # release tag of kitakar5525/linux-surface-patches
+_patch_release_tag=3.2 # release tag of kitakar5525/linux-surface-patches
 
-_patch_linux_ver=5.2 # patch directory name of kitakar5525/linux-surface-patches
+_patch_linux_ver=5.3 # patch directory name of kitakar5525/linux-surface-patches
 pkgver=${_srcver//-/.}
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
