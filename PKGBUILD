@@ -4,7 +4,7 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface       # Build kernel with a different name
-_srcver=5.3.2-arch2
+_srcver=5.3.4-arch1
 pkgrel=1
 _patch_release_tag=3.4 # release tag of kitakar5525/linux-surface-patches
 
