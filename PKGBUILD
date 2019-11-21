@@ -15,7 +15,7 @@ makedepends=(
 )
 options=('!strip')
 _srcname=linux-${_srctag#*v}
-_patch_release_tag=master # release tag of kitakar5525/linux-surface-patches
+_patch_release_tag=v3.5 # release tag of kitakar5525/linux-surface-patches
 source=(
   "https://git.archlinux.org/linux.git/snapshot/$_srcname.tar.gz" # use tarball instead
   config         # the main kernel config file
