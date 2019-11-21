@@ -14,9 +14,9 @@ makedepends=(
   git
 )
 options=('!strip')
-_srcname=archlinux-linux
+_srcname=linux-${_srctag#*v}
 source=(
-  "$_srcname::git+https://git.archlinux.org/linux.git?signed#tag=$_srctag"
+  "https://git.archlinux.org/linux.git/snapshot/$_srcname.tar.gz" # use tarball instead
   config         # the main kernel config file
 )
 validpgpkeys=(
