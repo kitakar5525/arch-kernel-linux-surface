@@ -26,9 +26,9 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
   '8218F88849AAC522E94CF470A5E9288C4FA415FA'  # Jan Alexander Steffens (heftig)
 )
-sha256sums=('SKIP'
-            'SKIP'
-            'SKIP')
+sha256sums=('e4721edede1ddbad42ee5d5745d33c102e6cb307c35162b4bd1f308a642df798'
+            '2b522a43d0b98e084fbaf64dd69d7b0e9ed92f4f76175c98d5d06e53420dd921'
+            '63ac69504dcc265b3cd54fce25a6548470f374a3646bdee8ee8f70f4302ca824')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
