@@ -1,4 +1,4 @@
-# Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+# Maintainer: kitakar5525 (Hayataka) <kitakar@gmail.com>
 
 pkgbase=linux
 pkgver=5.3.12.1
