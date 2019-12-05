@@ -1,6 +1,6 @@
 # linux-surface for Arch Linux latest stable kernel
 
-- Currently based on Arch Linux linux kernel 5.3.y
+- Currently based on Arch Linux linux kernel 5.4.y
 
 - Intended for **Surface Book 1 (especially, with Performance Base)** and **Surface 3**, but all patches (or equivalent) from [jakeday repository](https://github.com/jakeday/linux-surface) are applied
 - PKGBUILD is from [trunk/linux](https://git.archlinux.org/svntogit/packages.git/log/trunk?h=packages/linux)
@@ -20,6 +20,11 @@ git clone --depth 1 https://github.com/kitakar5525/arch-kernel-linux-surface
 cd arch-kernel-linux-surface
 makepkg -sC
 ```
+
+
+
+## IPTS and legacy-i915
+Not working on 5.4 yet.
 
 
 ---
