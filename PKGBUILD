@@ -1,6 +1,6 @@
 # Maintainer: kitakar5525 (Hayataka) <kitakar@gmail.com>
 
-pkgbase=linux
+pkgbase=linux-surface
 pkgver=5.4.1.arch1
 pkgrel=1
 pkgdesc='Linux'
@@ -15,9 +15,11 @@ makedepends=(
 )
 options=('!strip')
 _srcname=linux-${_srctag#*v}
+_patch_release_tag=master # release tag of kitakar5525/linux-surface-patches
 source=(
   "https://git.archlinux.org/linux.git/snapshot/$_srcname.tar.gz" # use tarball instead
   config         # the main kernel config file
+  kitakar5525-linux-surface-patches-${_patch_release_tag}.tar.gz::https://github.com/kitakar5525/linux-surface-patches/archive/${_patch_release_tag}.tar.gz # kitakar5525/linux-surface-patches
 )
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
@@ -25,11 +27,15 @@ validpgpkeys=(
   '8218F88849AAC522E94CF470A5E9288C4FA415FA'  # Jan Alexander Steffens (heftig)
 )
 sha256sums=('SKIP'
+            'SKIP'
             'SKIP')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
 export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
+
+_linux_ver_major=$(echo $pkgver | cut -d. -f1)
+_linux_ver_minor=$(echo $pkgver | cut -d. -f2)
 
 prepare() {
   cd $_srcname
@@ -48,9 +54,29 @@ prepare() {
     patch -Np1 < "../$src"
   done
 
+  # apply patches from kitakar5525/linux-surface-patches
+  patch_path="../linux-surface-patches-${_patch_release_tag#*v}/patch-$_linux_ver_major.$_linux_ver_minor/"
+  if [ ! -e $patch_path ]; then # let `makepkg` fail if path not exist
+    echo "$patch_path: No such file or directory"
+    return 1;
+  fi
+  for p in $(find $patch_path -name "*.patch" | sort); do
+    echo "applying $p"
+    patch -Np1 -i $p
+  done
+
   msg2 "Setting config..."
   cp ../config .config
-  make olddefconfig
+
+  # use `oldconfig` instead of `olddefconfig`
+  #make olddefconfig
+  make oldconfig
+
+  # do `menuconfig` here if you want
+  # make menuconfig
+
+  # copy newly generated kernel config
+  cp .config ../config_new
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
