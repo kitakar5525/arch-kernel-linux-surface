@@ -1,0 +1,8 @@
+# ignore all
+*
+
+# except following
+!.gitignore
+!repos
+!trunk
+!README.md
