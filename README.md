@@ -1,3 +1,5 @@
+I don't use this PKGBUILD anymore as linux-surface repo now provides builds for Arch. Take a look at [here](https://github.com/linux-surface/linux-surface/tree/master/pkg/arch) for linux-surface's PKGBUILD.
+
 ## linux-surface for Arch Linux latest stable kernel with personal patches
 
 Note: linux-surface project now provides prebuilt kernel for Arch Linux (https://github.com/linux-surface/linux-surface/releases). \
